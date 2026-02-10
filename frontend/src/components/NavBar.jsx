@@ -10,6 +10,7 @@ export default function NavBar() {
         <Link className="nav-link mx-4" to="/register">Register</Link>
         <Link className="nav-link mx-4" to="/user">User</Link>
         <Link className="nav-link mx-4" to="/admin">Admin</Link>
+        <Link className="nav-link mx-4" to="/pizza">Build Pizza</Link>
       </div>
     </div>
     </nav>
