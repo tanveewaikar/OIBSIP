@@ -6,17 +6,22 @@ import Register from './pages/Register'
 import UserDashboard from './pages/UserDashboard'
 import NavBar from './components/NavBar'
 import PizzaBuilder from './pages/PizzaBuilder'
+import ProtectedRoute from './components/ProtectedRoute'
+
 export default function App() {
   return (
    <BrowserRouter>
    <NavBar/>
+   <div className='container mt-5 pt-5'>
    <Routes>
    <Route path="/" element={<Login/>}/>
+   <Route path="/login" element={<Login/>}/>
    <Route path="/register" element={<Register/>}/>
-   <Route path="/user" element={<UserDashboard/>}/>
-   <Route path="/admin" element={<AdminDashboard/>}/>
+   <Route path="/user" element={<ProtectedRoute role ="user"><UserDashboard/></ProtectedRoute>}/>
+   <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard/></ProtectedRoute>}/>
    <Route path="/pizza" element={<PizzaBuilder/>}/>
    </Routes>
+   </div>
    </BrowserRouter>
   )
 }

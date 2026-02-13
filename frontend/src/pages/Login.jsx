@@ -5,10 +5,10 @@ const adminCreds = {
   email :"admin123@gmail.com",
   password :"admin@123"
 };
-const userCreds = {
-  email : "user123@gmail.com",
-  password : "user@123"
-}
+// const userCreds = {
+//   email : "user123@gmail.com",
+//   password : "user@123"
+// }
 
 export default function Login() {
 const [email,setEmail] = useState("");
@@ -16,22 +16,46 @@ const[password,setPassword] = useState("");
 const[error,setError] = useState("");
 const navigate = useNavigate();
 
-const handleLogin = (e)=>{
-e.preventDefault();
-if(email === adminCreds.email &&
-password === adminCreds.password)
-{
-  navigate("/admin");
-}
-else if (
-  email === userCreds.email &&
-  password === userCreds.password)
-  {
-    navigate("/user")
+const handleLogin = (e) => {
+  e.preventDefault();
+  setError("");
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  // USER LOGIN
+  if (
+    storedUser &&
+    email === storedUser.email &&
+    password === storedUser.password
+  ) {
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        role: "user",
+        email: storedUser.email,
+      })
+    );
+    navigate("/user");
+    return;
   }
-  else{
-    setError ("Invalid Email or Password")
+
+  // ADMIN LOGIN
+  if (
+    email === adminCreds.email &&
+    password === adminCreds.password
+  ) {
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        role: "admin",
+        email: adminCreds.email,
+      })
+    );
+    navigate("/admin");
+    return;
   }
+
+  setError("Invalid Email or Password");
 };
 
   return (
@@ -48,7 +72,7 @@ else if (
           <label>Password : </label>
           <input type="password" className="form-control" value={password} onChange={(e)=>setPassword(e.target.value)} />
         </div>
-        <button className="btn btn-primary-success">Login</button>
+        <button type ="submit" className="btn btn-success w-100">Login</button>
       </form>
      </div>
     </div>
