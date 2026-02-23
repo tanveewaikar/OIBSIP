@@ -123,34 +123,40 @@ router.post("/forgot-password", async (req, res)=>{
 
 //reset-password route 
 
-router.post("/reset-password", async (req, res)=>{
-    try{
-        //verify token 
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        // find user
-        const user = await User.findById(decoded.id);
-        // check if user exist 
-        if(!user){
-            res.status(404).json({message : "User not found"});
-        }
+router.post("/reset-password/:token", async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
 
-        // hash new password 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        // update password
-        user.password = hashedPassword; 
-        //save User
-        await user.save();
-        res.status(200).json({message : "Password reset successfully"});
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    //  Find user
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-    catch(error){
-        console.log(error);
-        if(error.name === "TokenExpiredError"){
-            res.status(400).json({message : "Token expired"});
-        }
-        res.status(500).json({message : "Server error"});
+
+    //  Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Update password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful" });
+
+  } catch (error) {
+    console.log(error);
+
+    if (error.name === "TokenExpiredError") {
+      return res.status(400).json({ message: "Token expired" });
     }
-})
+
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 // Verification Route
 
