@@ -7,6 +7,7 @@ import UserDashboard from './pages/UserDashboard'
 import NavBar from './components/NavBar'
 import PizzaBuilder from './pages/PizzaBuilder'
 import ProtectedRoute from './components/ProtectedRoute'
+import ForgotPassword from './pages/ForgotPassword'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
    <Route path="/user" element={<ProtectedRoute role ="user"><UserDashboard/></ProtectedRoute>}/>
    <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard/></ProtectedRoute>}/>
    <Route path="/pizza" element={<PizzaBuilder/>}/>
+   <Route path="/forgot-password" element={<ForgotPassword/>}/>
    </Routes>
    </div>
    </BrowserRouter>

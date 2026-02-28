@@ -72,6 +72,7 @@ const handleLogin = (e) => {
           <label>Password : </label>
           <input type="password" className="form-control" value={password} onChange={(e)=>setPassword(e.target.value)} />
         </div>
+        <p>Forgot Password? <a href="/forgot-password">Click here</a> </p>
         <button type ="submit" className="btn btn-success w-100">Login</button>
       </form>
      </div>
