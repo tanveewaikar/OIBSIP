@@ -1,62 +1,39 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
-const adminCreds = {
-  email :"admin123@gmail.com",
-  password :"admin@123"
-};
-// const userCreds = {
-//   email : "user123@gmail.com",
-//   password : "user@123"
-// }
-
+import axios from "axios";
 export default function Login() {
 const [email,setEmail] = useState("");
 const[password,setPassword] = useState("");
 const[error,setError] = useState("");
 const navigate = useNavigate();
 
-const handleLogin = (e) => {
+const handleLogin = async (e) => {
   e.preventDefault();
   setError("");
-
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-
-  // USER LOGIN
-  if (
-    storedUser &&
-    email === storedUser.email &&
-    password === storedUser.password
-  ) {
-    localStorage.setItem(
-      "auth",
-      JSON.stringify({
-        role: "user",
-        email: storedUser.email,
-      })
+  try {
+    const res = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      { email, password }
     );
-    navigate("/user");
-    return;
-  }
 
-  // ADMIN LOGIN
-  if (
-    email === adminCreds.email &&
-    password === adminCreds.password
-  ) {
-    localStorage.setItem(
-      "auth",
-      JSON.stringify({
-        role: "admin",
-        email: adminCreds.email,
-      })
-    );
-    navigate("/admin");
-    return;
-  }
+    const { token } = res.data;
 
-  setError("Invalid Email or Password");
-};
+    // Save token
+    localStorage.setItem("token", token);
+
+    // Decode role from token (optional simple method)
+    const payload = JSON.parse(atob(token.split(".")[1]));
+
+    if (payload.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/user");
+    }
+
+  } catch (error) {
+    setError(error.response?.data?.message || "Login failed");
+  }
+}
 
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">

@@ -49,46 +49,56 @@ catch(error){
 }
 });
 
-
-// Login API 
+//login 
 router.post("/login", async (req,res)=>{
-    try{
-        const {email,password}= req.body
-        //check if user exist 
-        
-        const user = await User.findOne({email})
+  try{
+    const { email, password } = req.body;
 
-        if (!user.isVerified) {
-          return res.status(400).json({ message: "Please verify your email first" });
-        }
+    const user = await User.findOne({ email });
 
-        const isMatch = await bcrypt.compare(password, user.password)
-        if(!isMatch){
-            return res.status(400).json({message:"Invalid credentials"})
-        }
-           const token = jwt.sign(
-            {id: user._id, role: user.role},
-            process.env.JWT_SECRET,
-            {expiresIn: "1d"}
-           );
-           res.status(200).json({messgae:"Login successful" , token : token,});
-
-    }catch (error){
-            console.log(error)
-            res.status(500).json({message:"Server error"})
+    // Check if user exists
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
     }
-    })
-   
-    router.get("/profile",authMiddleware, async (req,res)=>{
-        try{
+
+    // Check if verified
+    if (!user.isVerified) {
+      return res.status(400).json({ message: "Please verify your email first" });
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Generate token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.status(200).json({ message: "Login successful", token });
+
+  } catch (error){
+    console.log(error);
+    res.status(500).json({ message:"Server error" });
+  }
+});
+
+//profile route
+router.get("/profile",authMiddleware, async (req,res)=>{
+    try{
             const user = await User.findById(req.user.id).select("-password");
             res.status(200).json(user);
-        }
-        catch(error){
+    }
+    catch(error){
             console.log(error);
             res.status(500).json({message : "server error"});
-        }
-    })
+    }
+})
 
 //Forgot-password route 
 
@@ -107,7 +117,7 @@ router.post("/forgot-password", async (req, res)=>{
                 {expiresIn : "15m"}
             );
         // create reset link
-        const resetLink = `http://localhost:3000/reset-password/${resetToken}`
+        const resetLink = `http://localhost:5173/reset-password/${resetToken}`
         await sendEmail(
             user.email,
             "Password reset",
