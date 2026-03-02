@@ -5,6 +5,7 @@ const User = require("../models/User");
 const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
 const sendEmail = require("../utils/sendEmail");
+const { default: adminMiddleware } = require("../middleware/adminMiddleware");
 //Register API
 router.post("/register",async (req,res)=>{
 try{
@@ -49,7 +50,8 @@ catch(error){
 }
 });
 
-//login 
+//login route
+
 router.post("/login", async (req,res)=>{
   try{
     const { email, password } = req.body;
@@ -188,4 +190,9 @@ router.get("/verify/:token", async (req,res)=>{
     }
 })
 
+//admin route
+
+router.get("/admin/test",authMiddleware,adminMiddleware,(req,res)=>{
+  res.json({message : "Welcom Admin"});
+})
 module.exports = router;
