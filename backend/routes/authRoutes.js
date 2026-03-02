@@ -193,6 +193,6 @@ router.get("/verify/:token", async (req,res)=>{
 //admin route
 
 router.get("/admin/test",authMiddleware,adminMiddleware,(req,res)=>{
-  res.json({message : "Welcom Admin"});
+  res.json({message : "Welcome Admin"});
 })
 module.exports = router;
