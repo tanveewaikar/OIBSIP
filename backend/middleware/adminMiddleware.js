@@ -3,7 +3,7 @@ const adminMiddleware = (req,res,next)=>{
     return res.staus(401).json({message: "Not authorized"})
   }
   if(req.user.role !== "admin"){
-    return res.status(403).json({message : "Acess denied. Admin only"})
+    return res.status(403).json({message : "Acess denied. Only Admin can access"})
   }
   next();
 }
