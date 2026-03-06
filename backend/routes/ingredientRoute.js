@@ -5,8 +5,19 @@ const router = express.Router();
 
 router.get("/", async (req,res)=>{
     try{
-        const ingredients = await Ingredient.find();
-        res.json(ingredients);
+        const bases = await Ingredient.find({type:"base"});
+        const sauces = await Ingredient.find({type:"sauce"});
+        const cheese = await Ingredient.find({type:"cheese"});
+        const veggies = await Ingredient.find({type:"veggie"});
+        const meat = await Ingredient.find({tyope:"meat"});
+
+        res.json({
+            bases,
+            sauces,
+            cheese,
+            veggies,
+            meat
+        });
     }
     catch(error){
         res.status(500).json({message : error.message});

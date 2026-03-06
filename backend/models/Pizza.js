@@ -23,16 +23,12 @@ const pizzaSchema = new mongoose.Schema(
       ref: "Ingredient"
     }
   ],
-  meats: [
+  meat: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ingredient"
     }
   ],
-  totalPrice: {
-    type: Number,
-    required: true
-  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
