@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import pizzaRoute from "./routes/pizzaRoute.js";
 import ingredientRoute from "./routes/ingredientRoute.js"
+import orderRoute from "./routes/orderRoute.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/pizza", pizzaRoute);
 app.use("/api/ingredients", ingredientRoute);
+app.use("/api/orders",orderRoute);
 
 console.log("ENV TEST:", process.env.MONGO_URI);
 
