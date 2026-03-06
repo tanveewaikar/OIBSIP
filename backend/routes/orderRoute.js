@@ -1,6 +1,7 @@
 import express from "express"
 import Order from "../models/Order.js"
 import Pizza from "../models/Pizza.js"
+import Ingredient from "../models/Ingredients.js"
 import authMiddleware from "../middleware/authMiddleware.js"
 
 const router = express.Router()
@@ -8,35 +9,61 @@ const router = express.Router()
 // Place Order
 router.post("/place-order", authMiddleware, async (req,res)=>{
 
-    try{
+try{
 
-        const {pizzaId} = req.body
+    const {pizzaId} = req.body
 
-        // find pizza
-        const pizza = await Pizza.findById(pizzaId)
+    const pizza = await Pizza.findById(pizzaId)
 
-        if(!pizza){
-            return res.status(404).json({message:"Pizza not found"})
-        }
-
-        // create order
-        const order = new Order({
-            user:req.user.id,
-            pizza:pizzaId,
-            totalPrice:pizza.totalPrice
-        })
-
-        await order.save()
-
-        res.status(201).json({
-            message:"Order placed successfully",
-            order
-        })
-
+    if(!pizza){
+        return res.status(404).json({message:"Pizza not found"})
     }
-    catch(error){
-        res.status(500).json({message:error.message})
-    }
+
+    let totalPrice = 0
+
+    // Base price
+    const base = await Ingredient.findById(pizza.base)
+    totalPrice += base.price
+
+    // Sauce price
+    const sauce = await Ingredient.findById(pizza.sauce)
+    totalPrice += sauce.price
+
+    // Cheese price
+    const cheese = await Ingredient.findById(pizza.cheese)
+    totalPrice += cheese.price
+
+    // Veggies price
+    const veggies = await Ingredient.find({_id: {$in: pizza.veggies}})
+    veggies.forEach(v => {
+        totalPrice += v.price
+    })
+
+    // Meat price
+    const meat = await Ingredient.find({_id: {$in: pizza.meat}})
+    meat.forEach(m => {
+        totalPrice += m.price
+    })
+
+    // Create order
+    const order = new Order({
+        user:req.user.id,
+        pizza:pizzaId,
+        totalPrice
+    })
+
+    await order.save()
+
+    res.status(201).json({
+        message:"Order placed successfully",
+        totalPrice,
+        order
+    })
+
+}
+catch(error){
+    res.status(500).json({message:error.message})
+}
 
 })
 
