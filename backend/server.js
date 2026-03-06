@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import pizzaRoute from "./routes/pizzaRoute.js";
+import ingredientRoute from "./routes/ingredientRoute.js"
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/pizza", pizzaRoute);
+app.use("/api/ingredients", ingredientRoute);
 
 console.log("ENV TEST:", process.env.MONGO_URI);
 
