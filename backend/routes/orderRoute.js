@@ -4,9 +4,11 @@ import Pizza from "../models/Pizza.js"
 import Ingredient from "../models/Ingredients.js"
 import authMiddleware from "../middleware/authMiddleware.js"
 import adminMiddleware from "../middleware/adminMiddleware.js"
+import sendEmail from "../utils/sendEmail.js"
+
 const router = express.Router()
 
-// Place Order
+// PLACE ORDER
 router.post("/place-order", authMiddleware, async (req,res)=>{
 
 try{
@@ -21,36 +23,112 @@ try{
 
     let totalPrice = 0
 
-    // Base price
+    // BASE
     const base = await Ingredient.findById(pizza.base)
     totalPrice += base.price
-    await Ingredient.findByIdAndUpdate(pizza.base,{$inc :{stock:-1}});
 
-    // Sauce price
-    const sauce = await Ingredient.findById(pizza.sauce)
-    totalPrice += sauce.price
-    await Ingredient.findByIdAndUpdate(pizza.sauce,{$inc :{stock:-1}});
+    const updatedBase = await Ingredient.findByIdAndUpdate(
+        pizza.base,
+        {$inc:{stock:-1}},
+        {new:true}
+    )
 
-    // Cheese price
-    const cheese = await Ingredient.findById(pizza.cheese)
-    totalPrice += cheese.price
-    await Ingredient.findByIdAndUpdate(pizza.cheese,{$inc :{sock:-1}});
-
-    // Veggies price
-    const veggies = await Ingredient.find({_id: {$in: pizza.veggies}})
-    for(const v of veggies){
-        totalPrice += v.price
-        await Ingredient.findByIdAndUpdate(v._id,{$inc:{stock:-1}});
+    if(updatedBase.stock < 20){
+        await sendEmail(
+            process.env.ADMIN_EMAIL,
+            "Low Stock Alert",
+            `<h3>${updatedBase.name} stock is running low</h3>
+            <p>Remaining stock: ${updatedBase.stock}</p>`
+        )
     }
 
-    // Meat price
-    const meat = await Ingredient.find({_id: {$in: pizza.meat}})
-    for(const m of meat){
-        totalPrice += m.price
-        await Ingredient.findByIdAndUpdate(m._id,{$inc:{stock:-1}});
-    }    
+    // SAUCE
+    const sauce = await Ingredient.findById(pizza.sauce)
+    totalPrice += sauce.price
 
-    // Create order
+    const updatedSauce = await Ingredient.findByIdAndUpdate(
+        pizza.sauce,
+        {$inc:{stock:-1}},
+        {new:true}
+    )
+
+    if(updatedSauce.stock < 20){
+        await sendEmail(
+            process.env.ADMIN_EMAIL,
+            "Low Stock Alert",
+            `<h3>${updatedSauce.name} stock is running low</h3>
+            <p>Remaining stock: ${updatedSauce.stock}</p>`
+        )
+    }
+
+    // CHEESE
+    const cheese = await Ingredient.findById(pizza.cheese)
+    totalPrice += cheese.price
+
+    const updatedCheese = await Ingredient.findByIdAndUpdate(
+        pizza.cheese,
+        {$inc:{stock:-1}},
+        {new:true}
+    )
+
+    if(updatedCheese.stock < 20){
+        await sendEmail(
+            process.env.ADMIN_EMAIL,
+            "Low Stock Alert",
+            `<h3>${updatedCheese.name} stock is running low</h3>
+            <p>Remaining stock: ${updatedCheese.stock}</p>`
+        )
+    }
+
+    // VEGGIES
+    const veggies = await Ingredient.find({_id: {$in: pizza.veggies}})
+
+    for(const v of veggies){
+
+        totalPrice += v.price
+
+        const updatedVeggie = await Ingredient.findByIdAndUpdate(
+            v._id,
+            {$inc:{stock:-1}},
+            {new:true}
+        )
+
+        if(updatedVeggie.stock < 20){
+            await sendEmail(
+                process.env.ADMIN_EMAIL,
+                "Low Stock Alert",
+                `<h3>${updatedVeggie.name} stock is running low</h3>
+                <p>Remaining stock: ${updatedVeggie.stock}</p>`
+            )
+        }
+
+    }
+
+    // MEAT
+    const meat = await Ingredient.find({_id: {$in: pizza.meat}})
+
+    for(const m of meat){
+
+        totalPrice += m.price
+
+        const updatedMeat = await Ingredient.findByIdAndUpdate(
+            m._id,
+            {$inc:{stock:-1}},
+            {new:true}
+        )
+
+        if(updatedMeat.stock < 20){
+            await sendEmail(
+                process.env.ADMIN_EMAIL,
+                "Low Stock Alert",
+                `<h3>${updatedMeat.name} stock is running low</h3>
+                <p>Remaining stock: ${updatedMeat.stock}</p>`
+            )
+        }
+
+    }
+
+    // CREATE ORDER
     const order = new Order({
         user:req.user.id,
         pizza:pizzaId,
@@ -64,7 +142,7 @@ try{
         totalPrice,
         order
     })
- 
+
 }
 catch(error){
     res.status(500).json({message:error.message})
@@ -72,28 +150,39 @@ catch(error){
 
 })
 
-//status update route 
 
-router.put("/update-status/:orderId", authMiddleware,adminMiddleware, async (req, res)=>{
-    try{
-        const {orderStatus}= req.body;
-        
-        const order = await Order.findByIdAndUpdate(
-            req.params.orderId,
-            {orderStatus},
-            {new:true}
-        )
-        if(!order){
-            return res.status(404).json({message:"Order not found"});
-        }
-        res.json({message :"Order status updated successfully", order});
+// UPDATE ORDER STATUS (ADMIN)
+
+router.put("/update-status/:orderId", authMiddleware, adminMiddleware, async (req,res)=>{
+
+try{
+
+    const {orderStatus} = req.body
+
+    const order = await Order.findByIdAndUpdate(
+        req.params.orderId,
+        {orderStatus},
+        {new:true}
+    )
+
+    if(!order){
+        return res.status(404).json({message:"Order not found"})
     }
-    catch(error){
-        res.status(500).json({message: error.message});
-    }
+
+    res.json({
+        message:"Order status updated successfully",
+        order
+    })
+
+}
+catch(error){
+    res.status(500).json({message:error.message})
+}
+
 })
 
-// Get My Orders
+
+// GET MY ORDERS
 
 router.get("/my-orders", authMiddleware, async (req,res)=>{
 
@@ -119,4 +208,65 @@ catch(error){
 }
 
 })
+
+
+// CREATE PAYMENT
+
+router.post("/create-payment/:orderId", authMiddleware, async (req,res)=>{
+
+ try{
+
+   const order = await Order.findById(req.params.orderId)
+
+   if(!order){
+      return res.status(404).json({message:"Order not found"})
+   }
+
+   const options = {
+     amount: order.totalPrice * 100,
+     currency: "INR",
+     receipt: order._id.toString()
+   }
+
+   res.json({
+      message:"Razorpay order created",
+      amount: options.amount
+   })
+
+ }catch(error){
+   res.status(500).json({message:error.message})
+ }
+
+})
+
+
+// VERIFY PAYMENT
+
+router.post("/verify-payment", authMiddleware, async (req,res)=>{
+
+ try{
+
+   const {orderId} = req.body
+
+   const order = await Order.findById(orderId)
+
+   if(!order){
+      return res.status(404).json({message:"Order not found"})
+   }
+
+   order.paymentStatus = "Paid"
+
+   await order.save()
+
+   res.json({
+     message:"Payment successful",
+     order
+   })
+
+ }catch(error){
+   res.status(500).json({message:error.message})
+ }
+
+})
+
 export default router
