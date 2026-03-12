@@ -70,7 +70,12 @@ if(status === "In Kitchen") return "warning"
 if(status === "Sent to Delivery") return "success"
 
 return "secondary"
+}
 
+const getPaymentColor = (paymentStatus)=>{
+ if(paymentStatus ==="Paid") return "success"
+ if(paymentStatus ==="Pending") return "danger"
+return "secondary"
 }
 
 return(
@@ -127,12 +132,15 @@ orders.map(order => (
 <p>
 <strong>Status:</strong> {" "}
 <span className={`badage bg-${getStatusColor(order.orderStatus)}`}>
-    {orderStatus}
+    {order.orderStatus}
 </span>
 </p>
 
 <p>
-<strong>Payment:</strong> {order.paymentStatus}
+<strong>Payment:</strong> {" "}
+<span className={`badage bg-${getPaymentColor(order.paymentStatus)}`}>
+    {order.paymentStatus}
+</span>
 </p>
 
 {order.paymentStatus !=="Paid" &&(
