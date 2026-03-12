@@ -80,6 +80,11 @@ orders.map(order => (
 <h5>Order ID: {order._id}</h5>
 
 <p>
+<strong>Date:</strong>{" "}
+{new Date(order.createdAt).toLocaleString()}
+</p>
+
+<p>
 <strong>Base:</strong> {order.pizza.base.name}
 </p>
 
