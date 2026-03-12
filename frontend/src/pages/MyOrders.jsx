@@ -109,6 +109,10 @@ orders.map(order => (
   ? order.pizza.meat.map(m => m.name).join(", ")
   : "None"}
 </p>
+
+<p>
+<strong>Total Price:</strong> ₹{order.totalPrice}
+</p>
 <p>
 <strong>Status:</strong> {order.orderStatus}
 </p>
