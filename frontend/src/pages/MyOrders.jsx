@@ -63,6 +63,16 @@ const handlePayment = async (orderId)=>{
     }
 }
 
+const getStatusColor = (status) => {
+
+if(status === "Order Received") return "secondary"
+if(status === "In Kitchen") return "warning"
+if(status === "Sent to Delivery") return "success"
+
+return "secondary"
+
+}
+
 return(
 
 <div className="container mt-4">
@@ -113,8 +123,12 @@ orders.map(order => (
 <p>
 <strong>Total Price:</strong> ₹{order.totalPrice}
 </p>
+
 <p>
-<strong>Status:</strong> {order.orderStatus}
+<strong>Status:</strong> {" "}
+<span className={`badage bg-${getStatusColor(order.orderStatus)}`}>
+    {orderStatus}
+</span>
 </p>
 
 <p>
