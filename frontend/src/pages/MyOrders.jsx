@@ -35,6 +35,34 @@ fetchOrders()
 
 },[])
 
+const handlePayment = async (orderId)=>{
+    try{
+        const token = localStorage.getItem("token");
+
+        await axios.post(
+            "http://localhost:5000/api/orders/verify-Payment",
+            {orderId},
+            {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+        )
+
+        //Update UI after payment
+        setOrders(prev=>(
+            prev.map(order=>(
+                order._id === orderId ?
+                {...order,paymentStatus : "Paid"}
+                :order
+            ))
+        ))
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 return(
 
 <div className="container mt-4">
@@ -71,6 +99,9 @@ orders.map(order => (
 <strong>Payment:</strong> {order.paymentStatus}
 </p>
 
+{order.paymentStatus !=="Paid" &&(
+    <button className="btn btn-primary mt-2" onClick={()=>handlePayment(order._id)}>Pay Now</button>
+)}
 </div>
 
 ))

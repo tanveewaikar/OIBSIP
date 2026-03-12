@@ -278,10 +278,10 @@ export default function PizzaBuilder() {
       <div className="mt-4 p-3 bg-light rounded">
         <h4>Total Price: ₹{totalPrice}</h4>
 
-        <button className="btn btn-success mt-2" onClick={placeOrder} disabled ={!isOrderValid || loading}>
-          Place Order
-          {loading ? "Placing Order..." : "Place Order"}
+        <button className="btn btn-success mt-2" onClick={placeOrder} disabled={!isOrderValid || loading}>
+         {loading ? "Placing Order..." : "Place Order"}
         </button>
+        
       </div>
     </div>
   );
