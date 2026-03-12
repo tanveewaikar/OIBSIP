@@ -92,6 +92,19 @@ orders.map(order => (
 </p>
 
 <p>
+<strong>Veggies:</strong>{" "}
+{order.pizza.veggies.length > 0
+  ? order.pizza.veggies.map(v => v.name).join(", ")
+  : "None"}
+</p>
+
+<p>
+<strong>Meat:</strong>{" "}
+{order.pizza.meat.length > 0
+  ? order.pizza.meat.map(m => m.name).join(", ")
+  : "None"}
+</p>
+<p>
 <strong>Status:</strong> {order.orderStatus}
 </p>
 
