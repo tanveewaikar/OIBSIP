@@ -26,7 +26,8 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      isVerified: true
     });
 
     await newUser.save();
@@ -63,7 +64,9 @@ router.post("/login", async (req, res) => {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+     email: email.trim().toLowerCase()
+    });
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
