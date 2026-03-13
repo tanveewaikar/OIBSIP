@@ -55,7 +55,8 @@ export default function MyOrders() {
   const getStatusColor = (status) => {
     if (status === "Order Received") return "secondary";
     if (status === "In Kitchen") return "warning";
-    if (status === "Sent to Delivery") return "success";
+    if (status === "Sent to Delivery") return "primary";
+    if (status === "Delivered") return "success"
 
     return "secondary";
   };

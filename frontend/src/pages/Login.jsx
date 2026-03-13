@@ -1,58 +1,97 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
 import axios from "axios";
-export default function Login() {
-const [email,setEmail] = useState("");
-const[password,setPassword] = useState("");
-const[error,setError] = useState("");
-const navigate = useNavigate();
+import { Link, useNavigate } from "react-router-dom";
 
-const handleLogin = async (e) => {
-  e.preventDefault();
-  setError("");
-  try {
-    const res = await axios.post(
-      "http://localhost:5000/api/auth/login",
-      { email, password }
-    );
+function Login() {
 
-    const { token } = res.data;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    // Save token
-    localStorage.setItem("token", token);
+  const navigate = useNavigate();
 
-    // Decode role from token (optional simple method)
-    const payload = JSON.parse(atob(token.split(".")[1]));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (payload.role === "admin") {
-      navigate("/admin");
-    } else {
-      navigate("/user");
+    try {
+
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        { email, password }
+      );
+
+      alert("Login successful");
+
+      localStorage.setItem("token", res.data.token);
+
+      if (res.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
+
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
     }
-
-  } catch (error) {
-    setError(error.response?.data?.message || "Login failed");
-  }
-}
+  };
 
   return (
-    <div className="container vh-100 d-flex justify-content-center align-items-center">
-      <div className="col-md-4">
-      <h2 className="text-center mb-4">Login Page</h2>
-      {error && <p className="text-danger text-center">{error}</p>}
-      <form onSubmit={handleLogin}>
-        <div className="mb-3">
-          <label>Email : </label>
-          <input type="email" className="form-control" value={email} onChange={(e)=>setEmail(e.target.value)} />
-        </div>
-        <div className="mb-3">
-          <label>Password : </label>
-          <input type="password" className="form-control" value={password} onChange={(e)=>setPassword(e.target.value)} />
-        </div>
-        <p>Forgot Password? <a href="/forgot-password">Click here</a> </p>
-        <button type ="submit" className="btn btn-success w-100">Login</button>
-      </form>
-     </div>
+    <div className="container mt-5">
+
+      <div
+        className="card shadow p-4 mx-auto"
+        style={{ maxWidth: "400px" }}
+      >
+
+        <h3 className="text-center mb-4">Login</h3>
+
+        <form onSubmit={handleSubmit}>
+
+          <div className="mb-3">
+            <label>Email</label>
+
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label>Password</label>
+
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button className="btn btn-primary w-100">
+            Login
+          </button>
+
+        </form>
+
+        <p className="mt-3 text-center">
+          Forgot Password?{" "}
+          <Link to="/forgot-password">Click here</Link>
+        </p>
+
+        <p className="text-center">
+          Don't have an account?{" "}
+          <Link to="/register">Register</Link>
+        </p>
+
+      </div>
+
     </div>
-  )
+  );
 }
+
+export default Login;

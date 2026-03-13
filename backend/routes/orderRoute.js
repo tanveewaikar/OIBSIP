@@ -18,7 +18,7 @@ try{
     const pizza = await Pizza.findById(pizzaId)
 
     if(!pizza){
-        return res.status(404).json({message:"Pizza not found"})
+        return res.status(404).json({message : "Pizza not found"});
     }
 
     let totalPrice = 0
@@ -209,6 +209,33 @@ catch(error){
 
 })
 
+// GET ALL ORDERS (ADMIN)
+
+router.get("/admin-orders", authMiddleware, adminMiddleware, async (req,res)=>{
+
+try{
+
+   const orders = await Order.find()
+   .populate("user","name email")
+   .populate({
+      path:"pizza",
+      populate:[
+        {path:"base"},
+        {path:"sauce"},
+        {path:"cheese"},
+        {path:"veggies"},
+        {path:"meat"}
+      ]
+   })
+
+   res.json(orders)
+
+}
+catch(error){
+   res.status(500).json({message:error.message})
+}
+
+})
 
 // CREATE PAYMENT
 
