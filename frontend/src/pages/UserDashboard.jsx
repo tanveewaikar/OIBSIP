@@ -29,7 +29,7 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="dashboard-bg">
+    <div className="dashboard-bg min-vh-100">
       <div className="dashboard-overlay">
         <h2 className="text-center mb-4">🍕 Welcome to Pizza Builder</h2>
 

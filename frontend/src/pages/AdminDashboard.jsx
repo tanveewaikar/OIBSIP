@@ -75,7 +75,7 @@ const getPaymentColor = (paymentStatus) => {
 
 return (
 
-<div className="container page-container mt-5">
+<div className="container page-container mt-5 admin-dashboard-bg">
 
 <div className="card shadow p-4">
 

@@ -11,12 +11,14 @@ import ProtectedRoute from './components/ProtectedRoute'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import MyOrders from './pages/MyOrders'
+import Footer from './components/Footer'
 
 export default function App() {
   return (
    <BrowserRouter>
+   <div className="app-container">
    <NavBar/>
-   
+   <div className="main-content">
    <Routes>
    <Route path="/" element={<Login/>}/>
    <Route path="/login" element={<Login/>}/>
@@ -28,6 +30,9 @@ export default function App() {
    <Route path="/reset-password/:token" element={<ResetPassword/>}/>
    <Route path ="/my-orders" element={<MyOrders/>}/>
    </Routes>
+   </div>
+   <Footer/>
+   </div>
    </BrowserRouter>
   )
 }
