@@ -40,7 +40,7 @@ const handleRegister = async (e)=>{
 
 return (
 
-<div className="container mt-5">
+<div className="container page-container mt-5 ">
 
 <div className="card shadow p-4 mx-auto" style={{maxWidth:"400px"}}>
 

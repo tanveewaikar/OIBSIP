@@ -68,7 +68,7 @@ export default function MyOrders() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container page-container mt-4">
       <h2>My Orders</h2>
 
       {orders.length === 0 ? (

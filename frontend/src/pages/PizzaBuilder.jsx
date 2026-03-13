@@ -164,7 +164,7 @@ export default function PizzaBuilder() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container page-container mt-4">
         <h2>Customize Your Pizza 🍕</h2>
         {/* success message */}
         {success && (

@@ -43,7 +43,7 @@ const handleLogin = async (e) => {
 
 return (
 
-<div className="container vh-100 d-flex justify-content-center align-items-center">
+<div className="container mt-5 mx-auto d-flex justify-content-center">
 
 <div className="card shadow p-4" style={{width:"400px"}}>
 

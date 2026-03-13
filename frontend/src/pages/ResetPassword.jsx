@@ -32,7 +32,7 @@ function ResetPassword() {
 
   return (
 
-    <div className="container mt-5">
+    <div className="container page-container mt-5">
 
       <div className="card p-4 shadow mx-auto" style={{ maxWidth: "400px" }}>
 
