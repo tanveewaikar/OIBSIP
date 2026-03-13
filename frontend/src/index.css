@@ -44,3 +44,13 @@ min-height:100vh;
 .main-content{
 flex:1;
 }
+
+/* Mobile responsive */
+
+@media (max-width: 768px) {
+
+  .pizza-card-col{
+    width: 50%;
+  }
+
+}

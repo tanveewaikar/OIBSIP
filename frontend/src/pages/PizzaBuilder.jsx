@@ -178,7 +178,7 @@ export default function PizzaBuilder() {
 
       <div className="row">
         {bases.map((item) => (
-          <div className="col-md-3 mb-3" key={item._id}>
+          <div className="col-md-3 pizza-card-col mb-3" key={item._id}>
             <div className="card p-3 shadow-sm">
               <input type="radio" name="base" checked={selectedBase === item._id} onChange={() => setSelectedBase(item._id)}/>
               <h6 className="mt-2">{item.name}</h6>
