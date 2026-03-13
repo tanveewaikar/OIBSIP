@@ -16,7 +16,7 @@ export default function App() {
   return (
    <BrowserRouter>
    <NavBar/>
-   <div className='container mt-5 pt-5'>
+   
    <Routes>
    <Route path="/" element={<Login/>}/>
    <Route path="/login" element={<Login/>}/>
@@ -28,7 +28,6 @@ export default function App() {
    <Route path="/reset-password/:token" element={<ResetPassword/>}/>
    <Route path ="/my-orders" element={<MyOrders/>}/>
    </Routes>
-   </div>
    </BrowserRouter>
   )
 }
