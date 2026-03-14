@@ -52,7 +52,7 @@ export default function UserDashboard() {
 
           <div className="d-grid gap-3">
             <button
-              className="btn btn-warning text-white"
+              className="btn btn-outline-warning text-yellow"
               onClick={() => navigate("/pizza")}
             >
               Build Pizza

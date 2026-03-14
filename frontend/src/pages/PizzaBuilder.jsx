@@ -163,6 +163,7 @@ export default function PizzaBuilder() {
     return item ? item.name : "";
   };
 
+  
   return (
     <div className="container page-container mt-4">
         <h2>Customize Your Pizza 🍕</h2>
@@ -179,8 +180,13 @@ export default function PizzaBuilder() {
       <div className="row">
         {bases.map((item) => (
           <div className="col-md-3 pizza-card-col mb-3" key={item._id}>
-            <div className="card p-3 shadow-sm">
+            <div className={`card ingredients-card p-3 shadow-sm ${selectedBase === item._id ? "border border-success" : ""}`}>
               <input type="radio" name="base" checked={selectedBase === item._id} onChange={() => setSelectedBase(item._id)}/>
+              
+              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
+              alt={item.name}
+              style={{height:"70px", objectFit:"contain"}}className="mx-auto mt-2"/>
+
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>
@@ -195,8 +201,13 @@ export default function PizzaBuilder() {
       <div className="row">
         {sauces.map((item) => (
           <div className="col-md-3 mb-3" key={item._id}>
-            <div className="card p-3 shadow-sm">
+            <div className={`card ingredients-card p-3 shadow-sm ${selectedSauce === item.id ? "border border-success" : ""}`}>
               <input type="radio" name="sauce" checked={selectedSauce === item._id} onChange={() => setSelectedSauce(item._id)}/>
+              
+              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
+              alt={item.name}
+              style={{height:"70px", objectFit:"contain"}}className="mx-auto mt-2"/>
+
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>
@@ -210,8 +221,13 @@ export default function PizzaBuilder() {
       <div className="row">
         {cheese.map((item) => (
           <div className="col-md-3 mb-3" key={item._id}>
-            <div className="card p-3 shadow-sm">
+            <div className={`card ingredients-card p-3 shadow-sm ${selectedCheese === item.id ? "border border-success" : ""}`}>
               <input type="radio" name="cheese" checked={selectedCheese === item._id} onChange={() => setSelectedCheese(item._id)} />
+              
+              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
+              alt={item.name}
+              style={{height:"70px", objectFit:"contain"}}className="mx-auto mt-2"/>
+              
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>
@@ -225,8 +241,13 @@ export default function PizzaBuilder() {
       <div className="row">
         {veggies.map((item) => (
           <div className="col-md-3 mb-3" key={item._id}>
-            <div className="card p-3 shadow-sm">
+            <div className={`card ingredients-card p-3 shadow-sm ${selectedVeggies === item.id ? "border border-success" : ""}`}>
               <input type="checkbox" checked={selectedVeggies.includes(item._id)} onChange={() => handleVeggies(item._id)} />
+              
+              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
+              alt={item.name}
+              style={{height:"70px", objectFit:"contain"}}className="mx-auto mt-2"/>
+
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>
@@ -240,8 +261,13 @@ export default function PizzaBuilder() {
       <div className="row">
         {meat.map((item) => (
           <div className="col-md-3 mb-3" key={item._id}>
-            <div className="card p-3 shadow-sm">
+            <div className={`card ingredients-card p-3 shadow-sm ${selectedMeat === item.id ? "border border-success" :""}`}>
               <input type="checkbox" checked={selectedMeat.includes(item._id)} onChange={() => handleMeat(item._id)} />
+              
+              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
+              alt={item.name}
+              style={{height:"70px", objectFit:"contain"}}className="mx-auto d-block"/>
+
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>

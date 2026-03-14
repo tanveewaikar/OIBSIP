@@ -3,7 +3,7 @@ export default function NavBar() {
   return (
    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 sticky-top ">
     <div className="container-fluid">
-      <Link className="navbar-brand mx-2" to="/">Pizza App 🍕</Link>
+      <Link className="navbar-brand mx-2" to="/">Pizza Craft 🍕</Link>
 
       <div className="navbar-nav ms-auto">
         <Link className="nav-link mx-3" to="/">Login</Link>
