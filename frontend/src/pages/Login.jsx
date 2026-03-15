@@ -47,7 +47,7 @@ return (
 
 <div className="card shadow p-4" style={{width:"400px"}}>
 
-<h3 className="text-center mb-4">Login</h3>
+<h3 className="text-center mb-4 title ">Login</h3>
 
 {error && <p className="text-danger text-center">{error}</p>}
 

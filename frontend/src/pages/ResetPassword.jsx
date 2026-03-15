@@ -36,7 +36,7 @@ function ResetPassword() {
 
       <div className="card p-4 shadow mx-auto" style={{ maxWidth: "400px" }}>
 
-        <h3 className="text-center mb-3">Reset Password</h3>
+        <h3 className="text-center mb-3 title">Reset Password</h3>
 
         <form onSubmit={handleSubmit}>
 

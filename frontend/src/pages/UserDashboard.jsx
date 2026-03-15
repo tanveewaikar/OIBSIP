@@ -31,10 +31,10 @@ export default function UserDashboard() {
   return (
     <div className="dashboard-bg min-vh-100">
       <div className="dashboard-overlay">
-        <h2 className="text-center mb-4">🍕 Welcome to Pizza Builder</h2>
+        <h2 className="text-center mb-4 title">🍕 Welcome to Pizza Builder</h2>
 
         <div className="card shadow p-4">
-          <h4 className="text-center mb-4">User Dashboard</h4>
+          <h4 className="text-center mb-4 section-title">User Dashboard</h4>
 
           {user && (
             <div className="mb-4">

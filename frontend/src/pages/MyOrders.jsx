@@ -28,9 +28,10 @@ export default function MyOrders() {
   }, []);
 
   const handlePayment = async (orderId) => {
+    
     try {
       const token = localStorage.getItem("token");
-
+      
       await axios.post(
         "http://localhost:5000/api/orders/verify-payment",
         { orderId },
@@ -47,6 +48,7 @@ export default function MyOrders() {
           order._id === orderId ? { ...order, paymentStatus: "Paid" } : order,
         ),
       );
+      
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +71,7 @@ export default function MyOrders() {
 
   return (
     <div className="container page-container mt-4">
-      <h2>My Orders</h2>
+      <h2 className="title">My Orders</h2>
 
       {orders.length === 0 ? (
         <p>No orders found</p>

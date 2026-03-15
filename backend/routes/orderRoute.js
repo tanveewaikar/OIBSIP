@@ -269,31 +269,33 @@ router.post("/create-payment/:orderId", authMiddleware, async (req,res)=>{
 
 // VERIFY PAYMENT
 
-router.post("/verify-payment", authMiddleware, async (req,res)=>{
+router.post("/verify-payment", authMiddleware, async (req, res) => {
+  try {
+    const { orderId } = req.body;
+    const order = await Order.findById(orderId);
+    
+    if (!orderId) {
+      return res.status(400).json({ message: "Order ID is required" });
+    }
 
- try{
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
 
-   const {orderId} = req.body
+    order.paymentStatus = "Paid";
 
-   const order = await Order.findById(orderId)
+    await order.save();
 
-   if(!order){
-      return res.status(404).json({message:"Order not found"})
-   }
+    res.json({
+      success: true,
+      message: "Payment successful",
+      order,
+    });
 
-   order.paymentStatus = "Paid"
-
-   await order.save()
-
-   res.json({
-     message:"Payment successful",
-     order
-   })
-
- }catch(error){
-   res.status(500).json({message:error.message})
- }
-
-})
+  } catch (error) {
+    console.log("VERIFY PAYMENT ERROR:", error); // important for debugging
+    res.status(500).json({ message: error.message });
+  }
+});
 
 export default router

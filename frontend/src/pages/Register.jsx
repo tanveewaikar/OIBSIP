@@ -44,7 +44,7 @@ return (
 
 <div className="card shadow p-4 mx-auto" style={{maxWidth:"400px"}}>
 
-<h3 className="text-center mb-4">Register</h3>
+<h3 className="text-center mb-4 title">Register</h3>
 
 {message && <p className="text-success text-center">{message}</p>}
 {error && <p className="text-danger text-center">{error}</p>}

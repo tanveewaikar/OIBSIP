@@ -79,7 +79,7 @@ return (
 
 <div className="card shadow p-4">
 
-<div className="d-flex justify-content-between align-items-center mb-4">
+<div className="d-flex justify-content-between align-items-center mb-4 title">
 <h3>🍕 Admin Dashboard</h3>
 
 <button className="btn btn-outline-danger" onClick={handleLogout}>

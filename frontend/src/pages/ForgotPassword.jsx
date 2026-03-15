@@ -24,7 +24,7 @@ function ForgotPassword() {
     <div className="container page-container mt-5">
       <div className="card p-4 shadow mx-auto" style={{ maxWidth: "400px" }}>
         
-        <h3 className="text-center mb-3">Forgot Password</h3>
+        <h3 className="text-center mb-3 title">Forgot Password</h3>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

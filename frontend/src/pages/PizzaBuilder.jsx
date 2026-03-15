@@ -166,7 +166,7 @@ export default function PizzaBuilder() {
   
   return (
     <div className="container page-container mt-4">
-        <h2>Customize Your Pizza 🍕</h2>
+        <h2 className="title">Customize Your Pizza 🍕</h2>
         {/* success message */}
         {success && (
             <div className="alert alert-success mt-3">

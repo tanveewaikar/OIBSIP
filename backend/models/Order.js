@@ -19,12 +19,12 @@ const orderSchema = new mongoose.Schema({
         required:true
     },
 
-    orderStatus:{
-        type:String,
-        enum:["Order Received","In Kitchen","Sent to Delivery"],
-        default:"Order Received"
+    orderStatus: {
+    type: String,
+    enum: ["Order Received", "In Kitchen", "Sent to Delivery", "Delivered"],
+    default: "Order Received"
     },
-
+    
     paymentStatus:{
         type:String,
         enum:["Pending","Paid"],
