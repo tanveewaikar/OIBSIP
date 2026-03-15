@@ -8,7 +8,7 @@ export default function UserDashboard() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+        const res = await axios.get("https://pizza-craft.onrender.com/api/auth/profile", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

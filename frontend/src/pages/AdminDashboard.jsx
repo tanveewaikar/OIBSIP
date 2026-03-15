@@ -17,7 +17,7 @@ export default function AdminDashboard() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/orders/admin-orders",
+        "https://pizza-craft.onrender.com/api/orders/admin-orders",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:5000/api/orders/update-status/${orderId}`,
+        `https://pizza-craft.onrender.com/api/orders/update-status/${orderId}`,
         { orderStatus: newStatus },
         {
           headers: {

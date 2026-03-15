@@ -19,7 +19,7 @@ export default function PizzaBuilder() {
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/ingredients");
+        const res = await axios.get("https://pizza-craft.onrender.com/api/ingredients");
         setIngredients(res.data);
       } catch (error) {
         console.log(error);
@@ -99,7 +99,7 @@ export default function PizzaBuilder() {
 
       // STEP 1: Create pizza
       const pizzaRes = await axios.post(
-        "http://localhost:5000/api/pizza/create",
+        "https://pizza-craft.onrender.com/api/pizza/create",
         {
           base: selectedBase,
           sauce: selectedSauce,
@@ -118,7 +118,7 @@ export default function PizzaBuilder() {
 
       // STEP 2: Place order
       const orderRes = await axios.post(
-        "http://localhost:5000/api/orders/place-order",
+        "https://pizza-craft.onrender.com/api/orders/place-order",
         {
           pizzaId,
         },

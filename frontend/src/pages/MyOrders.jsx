@@ -10,7 +10,7 @@ export default function MyOrders() {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "http://localhost:5000/api/orders/my-orders",
+          "https://pizza-craft.onrender.com/api/orders/my-orders",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export default function MyOrders() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/api/orders/verify-payment",
+        "https://pizza-craft.onrender.com/api/orders/verify-payment",
         { orderId },
         {
           headers: {
