@@ -1,9 +1,5 @@
 body{
-    
-    
     background: linear-gradient(135deg,#fbcdc4,#e04848);
-
-   
 }
 
 .card{
@@ -17,36 +13,36 @@ body{
 .card:hover{
     transform: scale(1.02);
     transition: 0.2s;
-    
 }
 
 .ingredients-card{
     transition: all 0.25s ease;
     cursor: pointer;
+    text-align:center;
 }
 
 .ingredients-card:hover{
-   transform: translateY(-5px);
+   /* transform: translateY(-5px); */
+   transform:scale(1.03);
    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
 .ingredient-img{
-  width:120px;
+  width:100%;
   height:120px;
   object-fit:cover;
   border-radius:12px;
   margin:auto;
   display:block;
-  
 }
 
 .section-title{
-font-weight:600;
-margin-top:30px;
-margin-bottom:15px;
-color:#333;
-border-left:4px solid #ff4d4d;
-padding-left:10px;
+   font-weight:600;
+   margin-top:30px;
+   margin-bottom:15px;
+   color:#333;
+   border-left:4px solid #ff4d4d;
+   padding-left:10px;
 }
 
 .title{
@@ -62,7 +58,6 @@ padding-left:10px;
   background-position: center;
   background-repeat: no-repeat;
   width:100%;
-/* min-height:100vh; */
   height:100%;
   display:flex;
   justify-content:center;
@@ -96,5 +91,48 @@ padding-left:10px;
   .pizza-card-col{
     width: 50%;
   }
+
+  
+  .admin-dashboard-bg{
+  padding:10px;
+  }
+
+  table{
+  font-size:13px;
+  }
+  
+  .title{
+  font-size:22px;
+  text-align:center;
+}
+
+  .section-title{
+  font-size:18px;
+}
+
+.email-text{
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.page-container{
+  padding:10px;
+}
+
+.footer{
+  padding:10px 0 !important;
+  text-align:center;
+  margin-top: 20px;
+}
+
+.footer h5{
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.footer p{
+  font-size:13px;
+  margin:2px 0;
+}
 
 }

@@ -42,7 +42,8 @@ export default function UserDashboard() {
                 <strong>Name:</strong> {user.name}
               </p>
               <p>
-                <strong>Email:</strong> {user.email}
+                <strong>Email:</strong>{" "}
+                <span className="email-text">{user.email}</span>
               </p>
               <p>
                 <strong>Role:</strong> {user.role}
@@ -53,15 +54,13 @@ export default function UserDashboard() {
           <div className="d-grid gap-3">
             <button
               className="btn btn-outline-warning text-yellow"
-              onClick={() => navigate("/pizza")}
-            >
+              onClick={() => navigate("/pizza")}>
               Build Pizza
             </button>
 
             <button
               className="btn btn-outline-primary"
-              onClick={() => navigate("/my-orders")}
-            >
+              onClick={() => navigate("/my-orders")}>
               My Orders
             </button>
 

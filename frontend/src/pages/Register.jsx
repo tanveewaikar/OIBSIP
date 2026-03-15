@@ -1,99 +1,84 @@
-import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import axios from "axios"
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-const [name,setName] = useState("")
-const [email,setEmail]= useState("")
-const [password,setPassword] = useState("")
-const [message,setMessage] = useState("")
-const [error , setError] = useState("")
+  const navigate = useNavigate();
 
-const navigate = useNavigate()
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-const handleRegister = async (e)=>{
-  e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        name,
+        email,
+        password,
+      });
 
-  try{
+      setMessage(res.data.message);
+      setError("");
 
-    const res = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      {name,email,password}
-    )
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (error) {
+      setError(error.response?.data?.message || "Registration failed");
+      setMessage("");
+    }
+  };
 
-    setMessage(res.data.message)
-    setError("")
+  return (
+    <div className="container page-container mt-5 ">
+      <div className="card shadow p-4 mx-auto" style={{ maxWidth: "400px" }}>
+        <h3 className="text-center mb-4 title">Register</h3>
 
-    setTimeout(()=>{
-      navigate('/login')
-    },2000)
+        {message && <p className="text-success text-center">{message}</p>}
+        {error && <p className="text-danger text-center">{error}</p>}
 
-  }
-  catch(error){
+        <form onSubmit={handleRegister}>
+          <div className="mb-3">
+            <label>Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required/>
+          </div>
 
-    setError(error.response?.data?.message || "Registration failed")
-    setMessage("")
+          <div className="mb-3">
+            <label>Email</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required/>
+          </div>
 
-  }
-}
+          <div className="mb-3">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required/>
+          </div>
 
-return (
+          <button className="btn btn-success w-100">Register</button>
+        </form>
 
-<div className="container page-container mt-5 ">
-
-<div className="card shadow p-4 mx-auto" style={{maxWidth:"400px"}}>
-
-<h3 className="text-center mb-4 title">Register</h3>
-
-{message && <p className="text-success text-center">{message}</p>}
-{error && <p className="text-danger text-center">{error}</p>}
-
-<form onSubmit={handleRegister}>
-
-<div className="mb-3">
-<label>Name</label>
-<input
-type="text"
-className="form-control"
-value={name}
-onChange={(e)=>setName(e.target.value)}
-required
-/>
-</div>
-
-<div className="mb-3">
-<label>Email</label>
-<input
-type="email"
-className="form-control"
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-required
-/>
-</div>
-
-<div className="mb-3">
-<label>Password</label>
-<input
-type="password"
-className="form-control"
-value={password}
-onChange={(e)=>setPassword(e.target.value)}
-required
-/>
-</div>
-
-<button className="btn btn-success w-100">Register</button>
-
-</form>
-
-<p className="text-center mt-3">
-Already have an account? <Link to="/login">Login</Link>
-</p>
-
-</div>
-</div>
-
-)
+        <p className="text-center mt-3">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
+    </div>
+  );
 }

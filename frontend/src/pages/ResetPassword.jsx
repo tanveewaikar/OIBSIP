@@ -50,9 +50,7 @@ function ResetPassword() {
               placeholder="Enter new password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
+              required/>
           </div>
 
           <button className="btn btn-success w-100">

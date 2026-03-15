@@ -163,29 +163,36 @@ export default function PizzaBuilder() {
     return item ? item.name : "";
   };
 
-  
   return (
     <div className="container page-container mt-4">
-        <h2 className="title">Customize Your Pizza 🍕</h2>
-        {/* success message */}
-        {success && (
-            <div className="alert alert-success mt-3">
-                Order placed successfully
-            </div>
-        )}
+      <h2 className="title">Customize Your Pizza 🍕</h2>
+      {/* success message */}
+      {success && (
+        <div className="alert alert-success mt-3">
+          Order placed successfully
+        </div>
+      )}
 
       {/* Base */}
       <h4 className="mt-4 section-title">🍞 Choose Base</h4>
 
       <div className="row">
         {bases.map((item) => (
-          <div className="col-md-3 pizza-card-col mb-3" key={item._id}>
-            <div className={`card ingredients-card mt-4 p-4 shadow-sm ${selectedBase === item._id ? "border border-success" : ""}`}>
-              <input type="radio" name="base" checked={selectedBase === item._id} onChange={() => setSelectedBase(item._id)}/>
-              
-              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
-              alt={item.name}
-              className="ingredient-img"/>
+          <div
+            className="col-lg-3 col-md-4 col-sm-6 col-12 pizza-card-col mb-3"
+            key={item._id}>
+            <div
+              className={`card ingredients-card mt-4 p-4 shadow-sm ${selectedBase === item._id ? "border border-success" : ""}`}>
+              <input
+                type="radio"
+                name="base"
+                checked={selectedBase === item._id}
+                onChange={() => setSelectedBase(item._id)}/>
+
+              <img
+                src={`/images/${item.name.toLowerCase().replace(/\s/g, "-")}.png`}
+                alt={item.name}
+                className="ingredient-img"/>
 
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
@@ -200,14 +207,21 @@ export default function PizzaBuilder() {
 
       <div className="row">
         {sauces.map((item) => (
-          <div className="col-md-3 mb-3" key={item._id}>
-            <div className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedSauce === item.id ? "border border-success" : ""}`}>
-              <input type="radio" name="sauce" checked={selectedSauce === item._id} onChange={() => setSelectedSauce(item._id)}/>
-              
-              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
-              alt={item.name}
-              className="ingredient-img"/>
+          <div
+            className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3"
+            key={item._id}>
+            <div
+              className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedSauce === item.id ? "border border-success" : ""}`}>
+              <input
+                type="radio"
+                name="sauce"
+                checked={selectedSauce === item._id}
+                onChange={() => setSelectedSauce(item._id)}/>
 
+              <img
+                src={`/images/${item.name.toLowerCase().replace(/\s/g, "-")}.png`}
+                alt={item.name}
+                className="ingredient-img"/>
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>
@@ -220,14 +234,22 @@ export default function PizzaBuilder() {
 
       <div className="row">
         {cheese.map((item) => (
-          <div className="col-md-3 mb-3" key={item._id}>
-            <div className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedCheese === item.id ? "border border-success" : ""}`}>
-              <input type="radio" name="cheese" checked={selectedCheese === item._id} onChange={() => setSelectedCheese(item._id)} />
-              
-              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
-              alt={item.name}
-              className="ingredient-img"/>
-              
+          <div
+            className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3"
+            key={item._id} >
+            <div
+              className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedCheese === item.id ? "border border-success" : ""}`}>
+              <input
+                type="radio"
+                name="cheese"
+                checked={selectedCheese === item._id}
+                onChange={() => setSelectedCheese(item._id)} />
+
+              <img
+                src={`/images/${item.name.toLowerCase().replace(/\s/g, "-")}.png`}
+                alt={item.name}
+                className="ingredient-img" />
+
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
             </div>
@@ -240,13 +262,20 @@ export default function PizzaBuilder() {
 
       <div className="row">
         {veggies.map((item) => (
-          <div className="col-md-3 mb-3" key={item._id}>
-            <div className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedVeggies === item.id ? "border border-success" : ""}`}>
-              <input type="checkbox" checked={selectedVeggies.includes(item._id)} onChange={() => handleVeggies(item._id)} />
-              
-              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
-              alt={item.name}
-              className="ingredient-img"/>
+          <div
+            className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3"
+            key={item._id} >
+            <div
+              className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedVeggies === item.id ? "border border-success" : ""}`} >
+              <input
+                type="checkbox"
+                checked={selectedVeggies.includes(item._id)}
+                onChange={() => handleVeggies(item._id)}/>
+
+              <img
+                src={`/images/${item.name.toLowerCase().replace(/\s/g, "-")}.png`}
+                alt={item.name}
+                className="ingredient-img"/>
 
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
@@ -260,13 +289,20 @@ export default function PizzaBuilder() {
 
       <div className="row">
         {meat.map((item) => (
-          <div className="col-md-3 mb-3" key={item._id}>
-            <div className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedMeat === item.id ? "border border-success" :""}`}>
-              <input type="checkbox" checked={selectedMeat.includes(item._id)} onChange={() => handleMeat(item._id)} />
-              
-              <img src={`/images/${item.name.toLowerCase().replace(/\s/g,"-")}.png`}
-              alt={item.name}
-              className="ingredient-img"/>
+          <div
+            className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3"
+            key={item._id} >
+            <div
+              className={`card ingredients-card mt-4 p-3 shadow-sm ${selectedMeat === item.id ? "border border-success" : ""}`} >
+              <input
+                type="checkbox"
+                checked={selectedMeat.includes(item._id)}
+                onChange={() => handleMeat(item._id)}/>
+
+              <img
+                src={`/images/${item.name.toLowerCase().replace(/\s/g, "-")}.png`}
+                alt={item.name}
+                className="ingredient-img"/>
 
               <h6 className="mt-2">{item.name}</h6>
               <p>₹{item.price}</p>
@@ -304,10 +340,12 @@ export default function PizzaBuilder() {
       <div className="mt-4 p-3 bg-light rounded">
         <h4>Total Price: ₹{totalPrice}</h4>
 
-        <button className="btn btn-success mt-2" onClick={placeOrder} disabled={!isOrderValid || loading}>
-         {loading ? "Placing Order..." : "Place Order"}
+        <button
+          className="btn btn-success mt-2"
+          onClick={placeOrder}
+          disabled={!isOrderValid || loading} >
+          {loading ? "Placing Order..." : "Place Order"}
         </button>
-        
       </div>
     </div>
   );
